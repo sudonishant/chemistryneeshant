@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEESHANT | Interactive Chemistry E-Book & Virtual Laboratories 2026</title>
+  <meta name="description" content="A premium interactive digital chemistry notebook for JEE Main + Advanced 2026. Premium paper textures, live simulations, NTA CBT test engine, and persistent study notes.">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- KaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="theme-paper-white font-handwriting">
+
+  <!-- Elegant Diagonal Watermark -->
+  <div class="watermark">NEESHANT</div>
+
+  <!-- Background Textures -->
+  <div class="paper-grain-overlay"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <i class="fas fa-atom brand-icon"></i>
+          <span class="brand-name">NEESHANT<span class="sub-brand">.chemistry</span></span>
+        </div>
+        <p class="brand-tagline">JEE Main & Advanced 2026</p>
+        <button class="btn btn-secondary btn-sm" id="sidebar-analytics-btn" style="width: 100%; margin-top: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="fas fa-chart-line"></i> <span>Study Analytics</span>
+        </button>
+      </div>
+
+      <!-- Quick Search -->
+      <div class="search-box-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="chapter-search" placeholder="Search topics, formulas...">
+      </div>
+
+      <!-- Scrollable Chapters List -->
+      <nav class="chapters-nav" id="chapters-nav">
+        <!-- Injected dynamically by script.js -->
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-wrapper">
+      
+      <!-- Top Action Bar -->
+      <header class="top-bar">
+        <div class="left-actions">
+          <button class="btn btn-icon sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="current-chapter-title-wrap">
+            <span class="volume-badge" id="current-volume-badge">Volume 1</span>
+            <h2 class="current-chapter-head" id="current-chapter-head">Chapter 1: Some Basic Concepts of Chemistry</h2>
+          </div>
+        </div>
+        
+        <div class="right-actions">
+          <!-- Theme Toggle Selector -->
+          <div class="theme-selector-dropdown">
+            <button class="btn btn-secondary dropdown-btn" id="theme-btn">
+              <i class="fas fa-palette"></i> <span>Theme: Paper</span>
+            </button>
+            <div class="dropdown-content">
+              <button class="theme-opt active" data-theme="theme-paper-white"><i class="fas fa-file-alt"></i> Paper Notebook</button>
+              <button class="theme-opt" data-theme="theme-darkboard-chalk"><i class="fas fa-chalkboard"></i> Dark Chalkboard</button>
+              <button class="theme-opt" data-theme="theme-retro-parchment"><i class="fas fa-scroll"></i> Aged Parchment</button>
+            </div>
+          </div>
+
+          <!-- Font Style Selector -->
+          <button class="btn btn-secondary" id="font-toggle-btn" title="Toggle Font Style">
+            <i class="fas fa-font"></i> <span>Handwriting</span>
+          </button>
+
+          <!-- View Mode Selector -->
+          <button class="btn btn-secondary" id="view-mode-btn" title="Toggle View Mode">
+            <i class="fas fa-scroll"></i> <span>Scroll Mode</span>
+          </button>
+
+          <!-- PDF Download Button -->
+          <button class="btn-download-pdf" id="pdf-download-btn" title="Download Chapter as PDF">
+            <i class="fas fa-file-pdf"></i> <span>PDF</span>
+          </button>
+
+          <!-- Formula Sheet Button -->
+          <button class="btn btn-secondary" id="formula-sheet-btn" title="Generate Chapter Formula Sheet">
+            <i class="fas fa-calculator"></i> <span>Formula Sheet</span>
+          </button>
+
+          <!-- Print Page Button -->
+          <button class="btn btn-icon-only" id="print-btn" title="Print/Export Chapter Notes">
+            <i class="fas fa-print"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Premium Translucent Movable Floating Dock -->
+      <div class="floating-dock-container" id="floating-dock">
+        <!-- Expanded Option Menu -->
+        <div class="floating-dock-menu" id="floating-dock-menu">
+          <button class="dock-menu-item btn-simulation" id="launch-sim-btn">
+            <i class="fas fa-play"></i> <span>Live Simulation</span>
+          </button>
+          <button class="dock-menu-item btn-cbt" id="launch-cbt-btn">
+            <i class="fas fa-laptop-code"></i> <span>Start CBT Test</span>
+          </button>
+          <button class="dock-menu-item btn-scratchpad" id="launch-scratchpad-btn">
+            <i class="fas fa-pencil-ruler"></i> <span>Rough Work</span>
+          </button>
+        </div>
+        
+        <!-- Draggable Handle & Toggle Button -->
+        <button class="floating-dock-trigger" id="floating-dock-trigger" title="Drag to Move, Click to Open Tools Menu">
+          <div class="trigger-icons">
+            <i class="fas fa-toolbox main-icon"></i>
+            <i class="fas fa-times close-icon"></i>
+          </div>
+          <span class="pulse-ring"></span>
+        </button>
+      </div>
+
+      <!-- Real Book Reader Panel (Notebook Style) -->
+      <div class="notebook-container" id="notebook-container">
+        
+        <div id="pages-container">
+          <!-- Margins and Notebook Lines are drawn using CSS backgrounds in .notebook-page -->
+          <article class="notebook-page" id="book-content-pane">
+            <!-- Injected dynamically by script.js -->
+          </article>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="notebook-pagination" id="notebook-pagination">
+          <button class="btn btn-secondary btn-sm" id="prev-page-btn">
+            <i class="fas fa-chevron-left"></i> Prev Page
+          </button>
+          <div class="page-number-display">
+            <span>Page</span>
+            <input type="number" id="page-input" min="1" max="2200" value="1">
+            <span>of 2200</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="next-page-btn">
+            Next Page <i class="fas fa-chevron-right"></i>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="mark-read-btn" title="Toggle read status for this chapter" style="margin-left: auto;">
+            <i class="far fa-check-circle"></i> <span>Mark Read</span>
+          </button>
+        </div>
+
+        <!-- Persistent Bottom Notes Area — Dual Tab (Text + Canvas) -->
+        <div class="bottom-notes-section">
+          <div class="notes-header">
+            <div class="notes-header-left">
+              <i class="fas fa-pen-nib"></i>
+              <span>Your Study Notes (Saved Automatically)</span>
+            </div>
+            <button class="btn btn-danger btn-sm" id="clear-notes-btn"><i class="fas fa-trash-alt"></i> Clear Notes</button>
+          </div>
+          <!-- Tab Buttons -->
+          <div class="notes-tabs">
+            <button class="notes-tab-btn active" id="notes-tab-text-btn">
+              <i class="fas fa-keyboard"></i> Type Notes
+            </button>
+            <button class="notes-tab-btn" id="notes-tab-canvas-btn">
+              <i class="fas fa-paint-brush"></i> Draw / Handwrite
+            </button>
+          </div>
+          <!-- Text Tab -->
+          <div class="notes-tab-content" id="notes-tab-text">
+            <textarea id="student-chapter-notes" placeholder="Write down your formulas, personal study notes, reminders, or questions here..." class="handwritten-textarea"></textarea>
+          </div>
+          <!-- Canvas Tab -->
+          <div class="notes-tab-content hidden" id="notes-tab-canvas">
+            <div class="notes-canvas-container">
+              <div id="notes-canvas-toolbar">
+                <span style="font-size:0.8rem; font-weight:600;">Color:</span>
+                <button class="color-indicator active" style="background:#1a237e;" data-color="#1a237e"></button>
+                <button class="color-indicator" style="background:#e53935;" data-color="#e53935"></button>
+                <button class="color-indicator" style="background:#43a047;" data-color="#43a047"></button>
+                <button class="color-indicator" style="background:#7b1fa2;" data-color="#7b1fa2"></button>
+                <button class="color-indicator" style="background:#0288d1;" data-color="#0288d1"></button>
+                
+                <span style="font-size:0.8rem; font-weight:600; margin-left:12px;">Brush:</span>
+                <label for="brush-size-select" class="visually-hidden" style="display:none;">Select brush size</label>
+                <select id="brush-size-select" class="brush-size-dropdown">
+                  <option value="2">2px Fine</option>
+                  <option value="4" selected>4px Medium</option>
+                  <option value="8">8px Bold</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" id="canvas-erase-btn" style="margin-left:auto;"><i class="fas fa-eraser"></i> Erase</button>
+              </div>
+              <canvas id="notes-drawing-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Fullscreen Interactive Simulation Viewport Modal -->
+  <div class="modal-overlay" id="simulation-modal">
+    <div class="modal-card sim-card">
+      <div class="modal-header">
+        <div class="sim-title-wrap">
+          <button class="btn-back-gallery" id="sim-back-btn" title="Back to Gallery" style="display:none"><i class="fas fa-arrow-left"></i></button>
+          <i class="fas fa-flask"></i>
+          <div>
+            <h3 class="modal-title" id="sim-title">Simulation Lab</h3>
+            <p class="sim-subtitle" id="sim-subtitle">Choose a simulation</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" id="close-sim-btn" aria-label="Close Simulation"><i class="fas fa-times"></i></button>
+      </div>
+      <!-- Simulation Gallery View -->
+      <div class="sim-gallery-view" id="sim-gallery-view">
+        <div class="sim-gallery-grid" id="sim-gallery-grid">
+          <!-- Populated dynamically from SIM_REGISTRY -->
+        </div>
+      </div>
+      <!-- Active Simulation View (hidden by default) -->
+      <div class="modal-body sim-body-grid" id="sim-active-view" style="display:none">
+        <div class="canvas-container">
+          <canvas id="chemistry-canvas" width="800" height="500"></canvas>
+          <div class="canvas-overlay-stats" id="canvas-stats">
+            <!-- Dynamically populated stats values -->
+          </div>
+        </div>
+        <div class="controls-panel">
+          <h4 class="control-header"><i class="fas fa-sliders-h"></i> Parameters &amp; Variables</h4>
+          <div class="controls-group" id="simulation-controls-box"></div>
+          <div class="controls-actions">
+            <button class="btn btn-primary" id="sim-run-btn"><i class="fas fa-play"></i> Run Simulation</button>
+            <button class="btn btn-secondary" id="sim-reset-btn"><i class="fas fa-undo"></i> Reset</button>
+          </div>
+          <div class="sim-explanation-box" id="sim-explanation">
+            <h5>Concept Breakdown</h5>
+            <p>Adjust the sliders to alter the chemical conditions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NTA CBT Practice Test Screen Overlay -->
+  <div class="cbt-fullscreen-overlay" id="cbt-modal">
+    
+    <!-- CBT Header Section -->
+    <header class="cbt-header">
+      <div class="cbt-brand">
+        <span class="cbt-logo">NTA</span>
+        <div class="cbt-title-group">
+          <h1>NEESHANT COMPUTER BASED TEST (CBT) PRACTICE</h1>
+          <p>JEE Main + Advanced Mock Simulator 2026</p>
+        </div>
+      </div>
+      <div class="cbt-meta">
+        <div class="meta-item">
+          <span class="lbl">Candidate:</span>
+          <span class="val">JEE Aspirant</span>
+        </div>
+        <div class="meta-item">
+          <span class="lbl">Subject:</span>
+          <span class="val">Chemistry</span>
+        </div>
+        <div class="meta-item timer-item">
+          <span class="lbl">Time Left:</span>
+          <span class="val clock-timer" id="cbt-timer">30:00</span>
+        </div>
+        <div class="meta-item ghost-ranker-item" id="ghost-ranker-widget" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 4px 10px; display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-family: var(--font-sans); color: rgba(255,255,255,0.85); font-weight: 500;">
+          <span style="color: #2196F3; font-weight: 700;"><i class="fas fa-ghost"></i> Live Pacing:</span>
+          <span>Topper: <strong id="ghost-topper-pos" style="color: #ffb74d;">Q1</strong></span>
+          <span>You: <strong id="ghost-you-pos" style="color: #4fc3f7;">Q1</strong></span>
+          <span>Avg: <strong id="ghost-avg-pos" style="color: #b0bec5;">Q1</strong></span>
+        </div>
+        <div class="meta-item" style="justify-content: center; align-items: center; margin-left: 10px;">
+          <button class="btn" id="cbt-rough-work-btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); font-size: 0.85rem; padding: 6px 12px; border-radius: 4px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s; font-family: var(--font-sans); font-weight: 600;">
+            <i class="fas fa-pencil-ruler"></i> <span>Rough Work</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CBT Main Layout -->
+    <div class="cbt-main">
+      
+      <!-- Left: Question Area -->
+      <div class="cbt-question-container">
+        <div class="question-header">
+          <span class="q-num-badge" id="cbt-q-number">Question 01</span>
+          <div class="question-details">
+            <span class="cbt-badge difficulty-badge" id="cbt-q-diff">LEVEL 2</span>
+            <span class="cbt-badge tag-badge" id="cbt-q-tag">Physical Chemistry</span>
+          </div>
+        </div>
+        
+        <div class="cbt-scrollable-content">
+          <div class="cbt-question-context" id="cbt-q-context">
+            <!-- Context statements loaded dynamically -->
+          </div>
+          <div class="cbt-question-text" id="cbt-q-text">
+            <!-- Question text loaded dynamically -->
+          </div>
+          
+          <!-- Choices Container -->
+          <div class="cbt-options" id="cbt-options-container">
+            <!-- Options dynamically added -->
+          </div>
+        </div>
+
+        <div class="cbt-actions-bar">
+          <div class="left-cbt-actions">
+            <button class="btn btn-cbt-sec" id="cbt-mark-review-btn">Mark for Review & Next</button>
+            <button class="btn btn-cbt-sec" id="cbt-clear-btn">Clear Response</button>
+          </div>
+          <button class="btn btn-cbt-pri" id="cbt-save-next-btn">Save & Next <i class="fas fa-angle-right"></i></button>
+        </div>
+      </div>
+
+      <!-- Right: Palette & Navigation Sidebar -->
+      <aside class="cbt-sidebar">
+        <div class="candidate-photo-box">
+          <i class="fas fa-user-graduate photo-placeholder"></i>
+          <div class="candidate-info">
+            <span class="name">JEE Aspirant</span>
+            <span class="rank">Target Rank: AIR 1</span>
+          </div>
+        </div>
+
+        <div class="palette-legend">
+          <div class="legend-item"><span class="legend-box legend-answered">0</span> Answered</div>
+          <div class="legend-item"><span class="legend-box legend-not-answered">0</span> Not Answered</div>
+          <div class="legend-item"><span class="legend-box legend-not-visited">0</span> Not Visited</div>
+          <div class="legend-item"><span class="legend-box legend-review">0</span> Marked for Review</div>
+          <div class="legend-item"><span class="legend-box legend-review-answered">0</span> Answered & Marked (will be evaluated)</div>
+        </div>
+
+        <div class="palette-grid-title">Question Palette (Select Question)</div>
+        <div class="question-palette-grid" id="cbt-palette-grid">
+          <!-- Palette items (1 to 8 buttons) -->
+        </div>
+
+        <div class="cbt-sidebar-footer">
+          <button class="btn btn-cbt-submit" id="cbt-submit-btn">Submit Test <i class="fas fa-check-circle"></i></button>
+          <button class="btn btn-cbt-quit" id="cbt-quit-btn">Quit Test</button>
+        </div>
+      </aside>
+
+    </div>
+
+  </div>
+
+  <!-- CBT Mode Selection Modal -->
+  <div class="cbt-mode-selector-overlay" id="cbt-mode-selector">
+    <div class="cbt-mode-selector-inner">
+      <h2 class="cbt-mode-selector-title">🎯 Select Test Mode</h2>
+      <p class="cbt-mode-selector-subtitle">Choose how you want to practice for this chapter</p>
+      <div class="cbt-mode-grid">
+        <div class="cbt-mode-card" data-mode="page">
+          <span class="mode-icon">📄</span>
+          <div class="mode-title">Page-Specific</div>
+          <div class="mode-desc">Questions related to the current page you're reading</div>
+          <span class="mode-badge">Quick Practice</span>
+        </div>
+        <div class="cbt-mode-card" data-mode="topic">
+          <span class="mode-icon">📚</span>
+          <div class="mode-title">Topic-Wise</div>
+          <div class="mode-desc">Select specific topics within this chapter to test</div>
+          <span class="mode-badge">Focused</span>
+        </div>
+        <div class="cbt-mode-card" data-mode="full">
+          <span class="mode-icon">🏆</span>
+          <div class="mode-title">Full Chapter</div>
+          <div class="mode-desc">Complete chapter test with all questions — NTA style</div>
+          <span class="mode-badge">Complete Test</span>
+        </div>
+      </div>
+      <button class="cbt-mode-close-btn" id="close-cbt-mode-btn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Scratchpad / Rough Work Overlay -->
+  <div class="scratchpad-overlay" id="scratchpad-overlay">
+    <div class="scratchpad-container size-standard">
+      <div class="scratchpad-header">
+        <h3><i class="fas fa-pencil-ruler"></i> Rough Work / Scratchpad</h3>
+        <div class="scratchpad-header-actions">
+          <div class="scratchpad-size-selector">
+            <button id="btn-size-standard" class="size-btn active" title="Standard Size">Standard</button>
+            <button id="btn-size-large" class="size-btn" title="Large Size">Large</button>
+            <button id="btn-size-fullscreen" class="size-btn" title="Fullscreen">Fullscreen</button>
+          </div>
+          <button class="scratchpad-header-btn" id="scratchpad-save-btn" title="Save Drawing as PNG">
+            <i class="fas fa-camera"></i> Save Photo
+          </button>
+          <button class="scratchpad-close-btn" id="scratchpad-close-btn"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div id="scratchpad-toolbar">
+        <span style="font-size:0.8rem; font-weight:600;">Color:</span>
+        <button class="color-indicator active" style="background:#e53935;" data-color="#e53935"></button>
+        <button class="color-indicator" style="background:#1a237e;" data-color="#1a237e"></button>
+        <button class="color-indicator" style="background:#43a047;" data-color="#43a047"></button>
+        <button class="color-indicator" style="background:#ffd54f;" data-color="#ffd54f"></button>
+        <button class="color-indicator" style="background:#ffffff;" data-color="#ffffff"></button>
+        
+        <span style="font-size:0.8rem; font-weight:600; margin-left:12px;">Brush:</span>
+        <label for="scratchpad-brush-size" class="visually-hidden" style="display:none;">Select scratchpad brush size</label>
+        <select id="scratchpad-brush-size" class="brush-size-dropdown">
+          <option value="2">2px Fine</option>
+          <option value="4" selected>4px Medium</option>
+          <option value="8">8px Bold</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" id="scratchpad-erase-btn" style="margin-left:auto;"><i class="fas fa-eraser"></i> Erase</button>
+      </div>
+      <div class="scratchpad-canvas-wrap">
+        <canvas id="scratchpad-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CBT Final Analytics and Score Predictor Modal -->
+  <div class="modal-overlay" id="cbt-results-modal">
+    <div class="modal-card results-card">
+      <div class="modal-header bg-gradient">
+        <h3 class="modal-title text-white"><i class="fas fa-chart-line"></i> NTA CBT Performance Analytics</h3>
+        <button class="btn-close-modal text-white" id="close-results-btn"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body results-body">
+        
+        <!-- Score Card Header -->
+        <div class="score-summary-grid">
+          <div class="result-metric-card score-card-badge">
+            <span class="label">Total Score</span>
+            <span class="value" id="res-score">0/32</span>
+            <span class="footer-lbl">Target: 28+ (Top 100 AIR)</span>
+          </div>
+          <div class="result-metric-card accuracy-card-badge">
+            <span class="label">Accuracy</span>
+            <span class="value" id="res-accuracy">0%</span>
+            <span class="footer-lbl">Perfect speed & correctness</span>
+          </div>
+          <div class="result-metric-card time-card-badge">
+            <span class="label">Time Taken</span>
+            <span class="value" id="res-time">0:00</span>
+            <span class="footer-lbl">Out of 30:00 minutes</span>
+          </div>
+          <div class="result-metric-card rank-card-badge">
+            <span class="label">Estimated Percentile</span>
+            <span class="value" id="res-percentile">0%</span>
+            <span class="footer-lbl">JEE Advanced Predictor</span>
+          </div>
+        </div>
+
+        <!-- Analytical Graphs & Breakdowns -->
+        <div class="analytics-grid">
+          
+          <!-- Detailed Question Status Table -->
+          <div class="glass-container table-container">
+            <h4>Question Breakdown & Answer Keys</h4>
+            <div class="table-scroll-wrap">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>Q#</th>
+                    <th>Sub-Topic</th>
+                    <th>Level</th>
+                    <th>Your Choice</th>
+                    <th>Correct Key</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody id="results-table-body">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Weak Areas & Toppers Comparison -->
+          <div class="glass-container suggestions-container">
+            <h4>Weak Area Insights & Academic Feedback</h4>
+            <div class="feedback-box">
+              <div class="genz-feedback-heading" id="res-verdict-title">Performance Verdict: Outstanding!</div>
+              <p id="res-verdict-text">Outstanding performance! You demonstrate exceptional conceptual clarity and analytical precision. Your preparation shows clear potential for achieving a top All India Rank (AIR 1).</p>
+            </div>
+            
+            <div class="weak-topics-box">
+              <h5>Focus Priorities:</h5>
+              <ul class="priority-list" id="res-priority-list">
+                <!-- Injected dynamically -->
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CBT Speedometer Pacing Analytics Graph -->
+        <div class="glass-container speedometer-pacing-container" style="margin-top: 24px;">
+          <h4><i class="fas fa-tachometer-alt"></i> CBT Speedometer & Question-wise Pacing Analysis</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">
+            This graph analyzes the precise duration spent on each question. Review the color coding to evaluate pacing efficiency.
+          </p>
+          <div class="speedometer-graph-wrapper" id="cbt-speedometer-graph" style="display: flex; align-items: flex-end; gap: 15px; height: 180px; padding: 20px 10px 10px; border-left: 2px solid var(--border-color); border-bottom: 2px solid var(--border-color); margin-bottom: 15px; overflow-x: auto; background: rgba(0,0,0,0.015);">
+            <!-- Dynamic Speedometer Bars Injected Here -->
+          </div>
+          <div class="speedometer-legend" style="display: flex; gap: 20px; font-size: 0.85rem; font-weight: 500;">
+            <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 12px; height: 12px; border-radius: 3px; background: #4caf50; display: inline-block;"></span> Green: Super Pacing (&lt; 60s)</div>
+            <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 12px; height: 12px; border-radius: 3px; background: #ffb74d; display: inline-block;"></span> Yellow: Standard Pacing (60s - 120s)</div>
+            <div style="display: flex; align-items: center; gap: 6px;"><span style="width: 12px; height: 12px; border-radius: 3px; background: #ef5350; display: inline-block;"></span> Red: Bottleneck Danger (&gt; 120s)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Formula Sheet Generator Modal -->
+  <div class="modal-overlay" id="formula-sheet-modal">
+    <div class="modal-card formula-sheet-card">
+      <div class="modal-header">
+        <h3><i class="fas fa-calculator"></i> Chapter Formula Sheet</h3>
+        <button class="close-modal-btn" id="close-formula-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-muted);">
+          Select the formulas you want to compile. Unchecked formulas will be excluded from the generated sheet.
+        </p>
+        <div class="formula-select-actions" style="margin-bottom: 15px; display: flex; gap: 10px;">
+          <button class="btn btn-secondary btn-sm" id="formula-select-all">Select All</button>
+          <button class="btn btn-secondary btn-sm" id="formula-deselect-all">Deselect All</button>
+        </div>
+        <div class="formula-sheet-list" id="formula-sheet-list">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="close-formula-footer-btn">Cancel</button>
+        <button class="btn btn-primary" id="print-formula-sheet-btn">
+          <i class="fas fa-print"></i> Generate PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Dashboard Modal -->
+  <div class="modal-overlay" id="analytics-dashboard-modal">
+    <div class="modal-card analytics-dashboard-card" style="max-width: 900px; width: 95%;">
+      <div class="modal-header">
+        <h3><i class="fas fa-chart-bar"></i> Study Analytics Dashboard</h3>
+        <button class="close-modal-btn" id="close-analytics-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- Stats Summary Grid -->
+        <div class="analytics-stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
+          <div class="result-metric-card" style="background: rgba(2, 136, 209, 0.05); border-color: var(--accent-blue);">
+            <span class="label">Book Completion</span>
+            <span class="value" id="stats-completion">0%</span>
+            <span class="footer-lbl" id="stats-read-chapters">0 of 32 Chapters</span>
+          </div>
+          <div class="result-metric-card" style="background: rgba(123, 31, 162, 0.05); border-color: var(--accent-purple);">
+            <span class="label">CBT Tests Taken</span>
+            <span class="value" id="stats-tests-count">0</span>
+            <span class="footer-lbl">Total assessments</span>
+          </div>
+          <div class="result-metric-card" style="background: rgba(67, 160, 71, 0.05); border-color: var(--accent-green);">
+            <span class="label">Average Score</span>
+            <span class="value" id="stats-avg-score">0%</span>
+            <span class="footer-lbl">Target: 80%+</span>
+          </div>
+          <div class="result-metric-card" style="background: rgba(251, 140, 0, 0.05); border-color: var(--accent-orange);">
+            <span class="label">Last Active Ch.</span>
+            <span class="value" id="stats-last-active" style="font-size: 1.1rem; line-weight: 2.2rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; max-width: 100%;">None</span>
+            <span class="footer-lbl">Current session</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px;">
+          <!-- Left side: CBT Test History -->
+          <div class="glass-container table-container" style="padding: 15px;">
+            <h4 style="margin-bottom: 12px;"><i class="fas fa-history"></i> CBT Score History</h4>
+            <div class="table-scroll-wrap" style="max-height: 300px;">
+              <table class="results-table" style="font-size: 0.85rem;">
+                <thead>
+                  <tr>
+                    <th>Chapter</th>
+                    <th>Mode</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="analytics-history-tbody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Right side: Read Chapters Checklist -->
+          <div class="glass-container" style="padding: 15px;">
+            <h4 style="margin-bottom: 12px;"><i class="fas fa-book-reader"></i> Chapter Completion</h4>
+            <div id="analytics-chapter-list" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 5px;">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="reset-analytics-btn" style="background: rgba(229,57,53,0.1); border-color: var(--accent-red); color: var(--accent-red);">
+          <i class="fas fa-trash-alt"></i> Reset All Data
+        </button>
+        <button class="btn btn-primary" id="close-analytics-footer-btn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Chapter Data & Simulations & Controls Scripts -->
+  <script src="chapter-data.js"></script>
+  <script src="questions-bank.js"></script>
+  <script src="simulations.js"></script>
+  <script src="sim-engine.js"></script>
+  <script src="sim-registry.js"></script>
+  <script src="notes-canvas.js"></script>
+  <script src="formula-data.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
